@@ -17,3 +17,7 @@ Route::get('/about', 'PagesController@about');
 
 //create all the routes for free!
 Route::resource('posts', 'PostsController');
+
+Auth::routes();
+
+Route::get('/dashboard', 'DashboardController@index');
