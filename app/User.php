@@ -28,6 +28,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    // One to many relation
+    public function posts()
+    {
+      return $this->hasMany('App\Post');
+    }
     /**
      * The attributes that should be cast to native types.
      *
@@ -36,4 +41,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
 }

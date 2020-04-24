@@ -13,8 +13,32 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <h3>Tiyr posts</h3>
                     <a href="/posts/create" class="btn btn-primary">create post</a>
+                    <h3>Your blog posts</h3>
+                    @if( count($posts)>0 )
+                      <table class="table table-striped">
+                        <tr>
+                          <th>
+                            <td>title</td>
+                            <td></td>
+                            <td></td>
+                          </th>
+                        </tr>
+                        @foreach($posts as $post)
+                        <tr>
+                            <td>{{$post->title}}</td>
+                            <td><a href="/posts/{{$post->id}}/edit" class="btn btn-default">Edit</a> </td>
+                            <td>
+                              <form class="" action="{{route('/posts/')}}" method="post">
+
+                              </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                      </table>
+                      @else
+                      <p>You have no posts yet</p>
+                    @endif
                 </div>
             </div>
         </div>
