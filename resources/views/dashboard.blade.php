@@ -29,8 +29,10 @@
                             <td>{{$post->title}}</td>
                             <td><a href="/posts/{{$post->id}}/edit" class="btn btn-default">Edit</a> </td>
                             <td>
-                              <form class="" action="{{route('/posts/')}}" method="post">
-
+                              <form class="pull-right" action="{{ route('posts.destroy',['id'=>$post->id]) }}" method="post">
+                                @csrf
+                                <input type="submit" name="" value="Delete" class="btn btn-danger">
+                                <input type="hidden" name="_method" value="DELETE">
                               </form>
                             </td>
                         </tr>

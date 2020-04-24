@@ -7,7 +7,7 @@
     <!-- this is needed to display formated text -->
     {!!$post->body!!}
   </div>
-  <small>Written on {{$post->created_at}}</small>
+  <small>Written at {{ $post->created_at}} by {{ $post->user['name']}}</small>
   <a href="/posts/{{$post->id}}/edit" class="btn btn-default">Edit</a>
   <form class="pull-right" action="{{ route('posts.destroy',['id'=>$post->id]) }}" method="post">
     @csrf
