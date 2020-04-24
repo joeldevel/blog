@@ -14,6 +14,9 @@
       <li class="nav-item">
         <a class="nav-link" href="/services">Services</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/posts">Blog</a>
+      </li>
     </ul>
     <!-- <form class="form-inline mt-2 mt-md-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
