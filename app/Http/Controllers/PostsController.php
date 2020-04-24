@@ -16,8 +16,8 @@ class PostsController extends Controller
     public function index()
     {
         // Fetch the posts using eloquent
-        $posts = Post::orderBy('title', 'desc')->get();
-        // The same can be done without eloquent, just bring DB
+        $posts = Post::orderBy('title', 'desc')->paginate(10);
+        // The same can be done without eloquent, just bring in DB library
         // $posts = DB::select("SELECT * FROM posts");
         return view('posts.index')->with('posts',$posts);
     }
