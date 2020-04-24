@@ -6,7 +6,6 @@
         <title>{{config('app.name' , 'SimpleBlog')}}</title>
     </head>
     <body>
-      <h1>welcome to laravel</h1>
-      <p>This is a blog for practicing laravel</p>
+      @yield('content')
     </body>
 </html>
