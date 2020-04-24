@@ -9,6 +9,16 @@ use App\Post;
 class PostsController extends Controller
 {
     /**
+     * Create a new controller instance.
+     * Don't allow unloged users access
+     * @return void
+     */
+    public function __construct()
+    {
+      // But allow to access index and show views
+        $this->middleware('auth',['except'=>['index','show']]);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
