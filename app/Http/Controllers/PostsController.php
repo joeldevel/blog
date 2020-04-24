@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage; // For deleting image
 use App\Post;
 // use DB;
 
@@ -53,14 +54,34 @@ class PostsController extends Controller
       // validate the form input
         $this->validate($request,[
           'title' => 'required',
-          'summary-ckeditor' => 'required'
+          'summary-ckeditor' => 'required',
+          'cover_image' => 'image|nullable|max:1999'
         ]);
+        // Handle fole upload
+        if($request->hasFile('cover_image'))
+        {
+          //get the filename with extension
+          $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+          ///get just file name
+          $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+          //get file extension
+          $extension = $request->file('cover_image')->getClientOriginalExtension();
+          //filename to store
+          $fileNameToStore = $filename.'_'.time().'_'.$extension;
+          // uploadimage
+          $path = $request->file('cover_image')
+                          ->storeAs('public/cover_images',$fileNameToStore);
+        }else
+        {
+          $fileNameToStore = 'noimage.jpg';
+        }
         // return 'Ok';
         // Create the post with the input
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('summary-ckeditor');
         $post->user_id = auth()->user()->id;
+        $post->cover_image = $fileNameToStore;
         $post->save();
         return redirect('/posts')->with('success','Post created!');
 
@@ -109,13 +130,34 @@ class PostsController extends Controller
       // validate the form input
         $this->validate($request,[
           'title' => 'required',
-          'summary-ckeditor' => 'required'
+          'summary-ckeditor' => 'required',
+          'cover_image' => 'image|nullable|max:1999'
         ]);
-        // return 'Ok';
+        // Handle fole upload
+        if($request->hasFile('cover_image'))
+        {
+          //get the filename with extension
+          $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+          ///get just file name
+          $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+          //get file extension
+          $extension = $request->file('cover_image')->getClientOriginalExtension();
+          //filename to store
+          $fileNameToStore = $filename.'_'.time().'_'.$extension;
+          // uploadimage
+          $path = $request->file('cover_image')
+                          ->storeAs('public/cover_images',$fileNameToStore);
+        }
+
         // Create the post with the input
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('summary-ckeditor');
+        // If the image is not modified , then dont change it
+        if($request->hasFile('cover_image'))
+        {
+          $post->cover_image = $fileNameToStore;
+        }
         $post->save();
         return redirect('/posts')->with('success','Post updated!');
     }
@@ -133,6 +175,11 @@ class PostsController extends Controller
         if(auth()->user()->id != $post->user_id)
         {
           return redirect('/posts')->with('errors','Unauthoerisxe user');
+        }
+        if($post->cover_image != 'noimage.jpg')
+        {
+          // Delete the image
+          Storage::delete('public/cover_images/'.$post->cover_image);
         }
         $post->delete();
         return redirect('/posts')->with('success','Posts deleted!');

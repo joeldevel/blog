@@ -3,6 +3,7 @@
 @section('content')
   <a href="/posts" class="btn btn-default">Go back</a>
   <h1>{{$post->title}}</h1>
+  <img src="/storage/cover_images/{{$post->cover_image}}" alt="" style="width:100%" class="mb-4">
   <div class="">
     <!-- this is needed to display formated text -->
     {!!$post->body!!}
