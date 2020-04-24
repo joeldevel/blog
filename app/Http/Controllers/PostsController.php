@@ -16,7 +16,7 @@ class PostsController extends Controller
     public function index()
     {
         // Fetch the posts using eloquent
-        $posts = Post::orderBy('title', 'desc')->paginate(10);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
         // The same can be done without eloquent, just bring in DB library
         // $posts = DB::select("SELECT * FROM posts");
         return view('posts.index')->with('posts',$posts);
@@ -40,7 +40,19 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      // validate the form input
+        $this->validate($request,[
+          'title' => 'required',
+          'summary-ckeditor' => 'required'
+        ]);
+        // return 'Ok';
+        // Create the post with the input
+        $post = new Post;
+        $post->title = $request->input('title');
+        $post->body = $request->input('summary-ckeditor');
+        $post->save();
+        return redirect('/posts')->with('success','Post created!');
+
     }
 
     /**
