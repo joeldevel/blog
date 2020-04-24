@@ -8,4 +8,5 @@
     {!!$post->body!!}
   </div>
   <small>Written on {{$post->created_at}}</small>
+  <a href="/posts/{{$post->id}}/edit" class="btn btn-default">Edit</a>
 @endsection
