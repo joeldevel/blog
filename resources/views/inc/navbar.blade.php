@@ -59,6 +59,7 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
+              <li><a href="/dashboard">Dashboar</a> </li>
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
